@@ -10,7 +10,7 @@ from helper import check_request
 
 from HExceptions import parametersTypWrongException
 
-host = 'api.test.wsq.umeng.com'
+host = 'api.wsq.umeng.com'
 def post_data(url_path, ak, secret, encrypted_data, header=None, need_params=None):
     params_data = {"ak":ak,"encrypted_data":encrypted_data}
 
@@ -36,7 +36,7 @@ def post_data(url_path, ak, secret, encrypted_data, header=None, need_params=Non
     m.update(info)
     signdata = m.hexdigest()
 
-    url =  "http://%s%s?ak=%s&_t_=%d&_s_=%s&_e_=%s&sdkv=2.5.0" %(host, url_path, ak, t, signdata, "md5")
+    url =  "https://%s%s?ak=%s&_t_=%d&_s_=%s&_e_=%s&sdkv=2.5.0" %(host, url_path, ak, t, signdata, "md5")
     print url
     r = requests.post(url, data = params_data, headers=header)
     check_request(r)
@@ -64,7 +64,7 @@ def get_data(url_path, ak, secret, header=None, need_params=None):
     url_params = [ item[0]+"="+str(item[1]) for item in url_params]
     url_params = "&".join(url_params)
 
-    url =  "http://%s%s?%s" %(host,url_path, url_params)
+    url =  "https://%s%s?%s" %(host,url_path, url_params)
     r = requests.get(url,headers=header)
     check_request(r)
     return json.loads(r.text)
